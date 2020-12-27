@@ -38,7 +38,9 @@ def read_events(subject_path, remove_null=True):
 def get_events_for_stay(events, icustayid, intime=None, outtime=None):
     idx = (events.ICUSTAY_ID == icustayid)
     if intime is not None and outtime is not None:
-        idx = idx | ((events.CHARTTIME >= intime) & (events.CHARTTIME <= outtime))
+        idx = idx | (
+            (events.CHARTTIME.dt.date >= intime) & (events.CHARTTIME.dt.date <= outtime)
+        )
     events = events[idx]
     del events['ICUSTAY_ID']
     return events
