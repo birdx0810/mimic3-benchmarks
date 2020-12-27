@@ -57,8 +57,8 @@ for subject_dir in tqdm(os.listdir(args.subjects_root_path), desc='Iterating ove
     # extracting separate episodes
     for i in range(stays.shape[0]):
         stay_id = stays.ICUSTAY_ID.iloc[i]
-        intime = stays.INTIME.iloc[i]
-        outtime = stays.OUTTIME.iloc[i]
+        intime = stays.INTIME.iloc[i].date[0]
+        outtime = stays.OUTTIME.iloc[i].date[0]
 
         episode = get_events_for_stay(timeseries, stay_id, intime, outtime)
         if episode.shape[0] == 0:
