@@ -96,3 +96,8 @@ ENV/
 # States of models
 keras_states/
 states/
+
+# Self-written ignores
+data/
+output/
+mimic3/

@@ -38,7 +38,9 @@ def read_events(subject_path, remove_null=True):
 def get_events_for_stay(events, icustayid, intime=None, outtime=None):
     idx = (events.ICUSTAY_ID == icustayid)
     if intime is not None and outtime is not None:
-        idx = idx | ((events.CHARTTIME >= intime) & (events.CHARTTIME <= outtime))
+        idx = idx | (
+            (events.CHARTTIME.dt.date >= intime) & (events.CHARTTIME.dt.date <= outtime)
+        )
     events = events[idx]
     del events['ICUSTAY_ID']
     return events
@@ -46,7 +48,7 @@ def get_events_for_stay(events, icustayid, intime=None, outtime=None):
 
 def add_hours_elpased_to_events(events, dt, remove_charttime=True):
     events = events.copy()
-    events['HOURS'] = (events.CHARTTIME - dt).apply(lambda s: s / np.timedelta64(1, 's')) / 60./60
+    events['HOURS'] = (events.CHARTTIME.dt.date.subtract(dt)).apply(lambda s: s / np.timedelta64(1, 's')) / 60./60
     if remove_charttime:
         del events['CHARTTIME']
     return events
