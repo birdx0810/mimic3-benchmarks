@@ -99,5 +99,4 @@ states/
 
 # Self-written ignores
 data/
-output/
-mimic3/
+physionet.org/

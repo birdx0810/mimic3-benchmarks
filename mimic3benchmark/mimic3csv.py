@@ -47,6 +47,7 @@ def read_events_table_by_row(mimic3_path, table):
     nb_rows = {'chartevents': 330712484, 'labevents': 27854056, 'outputevents': 4349219}
     reader = csv.DictReader(open(os.path.join(mimic3_path, table.upper() + '.csv'), 'r'))
     for i, row in enumerate(reader):
+        row = {k.upper(): v for k, v in row.items()}
         if 'ICUSTAY_ID' not in row:
             row['ICUSTAY_ID'] = ''
         yield row, i, nb_rows[table.lower()]
