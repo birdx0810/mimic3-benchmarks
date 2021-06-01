@@ -8,7 +8,7 @@ import yaml
 import random
 random.seed(49297)
 from tqdm import tqdm
-
+from yaml import Loader
 
 def process_partition(args, definitions, code_to_group, id_to_group, group_to_id,
                       partition, eps=1e-6):
@@ -100,7 +100,7 @@ def main():
     args, _ = parser.parse_known_args()
 
     with open(args.phenotype_definitions) as definitions_file:
-        definitions = yaml.load(definitions_file)
+        definitions = yaml.load(definitions_file, Loader=Loader)
 
     code_to_group = {}
     for group in definitions:
